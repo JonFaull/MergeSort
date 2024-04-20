@@ -1,0 +1,138 @@
+using System;
+
+public class HelloWorld
+{
+    int newMergeSort = 0;
+     
+    public static void Main(string[] args)
+    {
+        //Console.WriteLine("Try programiz.pro");
+        
+        //int[] array = { 1, 2, 3, 4, 5, 6, 7, 8};
+        int[] array = {67, 2, 5, 1, 4, 45, 36, 5,7,56};
+        HelloWorld hello = new HelloWorld();
+        
+        int[] array2 = hello.MergeSort(array);
+        
+        PrintWithCommas(array2);
+        int length = array2.Length;
+        Console.WriteLine("Length " + length);
+        
+        
+        if(length % 2 == 0){
+           
+
+            int leftNumber = array2[length/2];
+            int rightNumber = array2[(length/2)-1];
+            int answer = (leftNumber+rightNumber)/2;
+            Console.WriteLine("Even " + leftNumber + " "+ rightNumber);
+            Console.WriteLine("Even " + answer);
+        } else {
+             int answer = array2[length/2];
+            Console.WriteLine("Odd " + answer);
+        }
+        
+    }
+    
+    public int[] MergeSort(int[] array)
+    {
+        
+       // Console.WriteLine("Starting array:");
+        
+       // PrintWithCommas(array);
+        
+        
+        if (array.Length <= 1){ //base case to break out of loop
+            
+     
+            return array;
+        }
+        
+        
+        
+        int arrayMiddleVal = array.Length / 2;
+        int[] leftArray = new int[arrayMiddleVal];
+        int[] rightArray = new int[array.Length - arrayMiddleVal];
+        int[] result = new int[array.Length];
+        
+        
+        
+        String newArrayValues = "";
+        for(int i = 0; i < arrayMiddleVal; i++){
+            leftArray[i] = array[i];
+            newArrayValues = newArrayValues + leftArray[i] + ",";
+           // Console.WriteLine(newArrayValuse);
+        }
+        String newArrayValues2 = "";
+        for(int i = 0; i < rightArray.Length; i++){
+            rightArray[i] = array[i + arrayMiddleVal];
+            newArrayValues2 = newArrayValues2 + rightArray[i] + ",";
+            // Console.WriteLine(newArrayValuse);
+        }
+        
+     
+        
+        leftArray = MergeSort(leftArray);
+        rightArray = MergeSort(rightArray);
+        
+       
+        
+        result = MergeArray(leftArray, rightArray);
+        
+       // Console.WriteLine("Result:");
+        //PrintWithCommas(result);
+        return result;
+    }
+    
+    public int[] MergeArray(int[] leftArray, int[] rightArray){
+        int[] result = new int[leftArray.Length + rightArray.Length];
+        
+        
+        int indexLeft = 0, indexRight = 0, indexResult = 0;
+        
+       
+       while(indexLeft<leftArray.Length || indexRight<rightArray.Length){
+            if(indexLeft<leftArray.Length && indexRight < rightArray.Length){
+                if(leftArray[indexLeft] <= rightArray[indexRight]){
+                    result[indexResult] = leftArray[indexLeft];
+                    indexLeft++;
+                    indexResult++;
+                } else {
+                    result[indexResult] = rightArray[indexRight];
+                    indexRight++;
+                    indexResult++;
+                }
+            } else if(indexLeft< leftArray.Length){
+                result[indexResult] = leftArray[indexLeft];
+                indexLeft++;
+                indexResult++;
+            } else if (indexRight < rightArray.Length){
+                result[indexResult] = rightArray[indexRight];
+                indexRight++;
+                indexResult++;
+            }
+       }
+           
+   
+        
+        return result;
+    }
+    
+    
+    
+public static void PrintWithCommas(int[] array)
+    {
+        for (int i = 0; i < array.Length; i++)
+        {
+            Console.Write(array[i]); // Print the digit
+            
+            // Print comma if it's not the last element
+            if (i < array.Length - 1)
+            {
+                Console.Write(", ");
+            }
+        }
+
+        Console.WriteLine(); // Print a newline at the end
+    }
+}
